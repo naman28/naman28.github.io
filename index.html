@@ -1,1 +1,152 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en" itemscope="" itemtype="http://schema.org/Person"><script type="text/javascript" class="__REQUESTLY__SCRIPT">(function(namespace) {
+  window[namespace] = window[namespace] || {};
+  window[namespace].responseRules = {};
+
+  let open = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function(method) {
+    this.addEventListener('readystatechange', function() {
+      if (this.readyState === 4 && window[namespace].responseRules.hasOwnProperty(this.responseURL)) {
+        const responseRule = window[namespace].responseRules[this.responseURL];
+        const {response, id} = responseRule;
+        const responseType = this.responseType;
+        let customResponse;
+
+        customResponse = response.type === 'code' ? responseRule.evaluator({
+            method,
+            url: this.responseURL,
+            requestHeaders: this.requestHeaders,
+            requestData: this.requestData,
+            responseType: this.responseType,
+            response: this.response
+          }) : response.value;
+
+        Object.defineProperty(this, 'response', {
+          get: function () {
+            if (response.type === 'static' && responseType === 'json') {
+              return JSON.parse(customResponse);
+            }
+            return customResponse;
+          }
+        });
+
+        if (responseType === '' || responseType === 'text') {
+          Object.defineProperty(this, 'responseText', {
+            get: function () {
+              return customResponse;
+            }
+          });
+        }
+
+        window.postMessage({
+          from: 'requestly',
+          type: 'response_rule_applied',
+          id
+        }, window.location.href);
+      }
+    }, false);
+    open.apply(this, arguments);
+  };
+
+  let send = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.send = function(data) {
+    this.requestData = data;
+    send.apply(this, arguments);
+  };
+
+  let setRequestHeader = XMLHttpRequest.prototype.setRequestHeader;
+  XMLHttpRequest.prototype.setRequestHeader = function(header, value) {
+    this.requestHeaders = this.requestHeaders || {};
+    this.requestHeaders[header] = value;
+    setRequestHeader.apply(this, arguments);
+  }
+})('__REQUESTLY__')</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <!-- Site Meta Data -->
+        <title>About</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Naman">
+
+        <link rel="shortcut icon" href="https://naman28.github.io/">
+
+        <!-- schema.org -->
+        <meta itemprop="name" content="Naman&#39;s Webpage ">
+        <meta itemprop="image" content="">
+        <meta itemprop="description" content="">
+
+        <link href="./About_files/css" rel="stylesheet" type="text/css">
+        <!-- Style Meta Data -->
+        <link rel="stylesheet" href="./About_files/style.css" type="text/css">
+        <link rel="stylesheet" href="./About_files/pygments.css" type="text/css">
+
+        <!-- Feed Meta Data -->
+  
+
+        <!-- Twitter Feed -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="">
+        <meta name="twitter:image" content="">
+</head>
+
+<body data-gr-c-s-loaded="true">
+<!-- Sidebar -->
+<aside>
+    <h1>Naman's Webpage </h1>
+    <br>
+
+
+    <nav class="nav">
+        <ul class="list-bare">
+
+
+                <li><a class="nav__link" href="https://naman28.github.io/">About</a></li>
+                <li><a class="nav__link" href="https://naman28.github.io/pages/code.html">Code</a></li>
+                <li><a class="nav__link" href="https://naman28.github.io/pages/contact.html">Contact</a></li>
+                <li><a class="nav__link" href="https://naman28.github.io/pages/funding.html">Funding</a></li>
+                <li><a class="nav__link" href="https://naman28.github.io/pages/publications.html">Publications</a></li>
+                <li><a class="nav__link" href="https://naman28.github.io/pages/research.html">Research</a></li>
+                <li><a class="nav__link" href="https://naman28.github.io/pages/students.html">Students</a></li>
+                <li><a class="nav__link" href="https://naman28.github.io/pages/talks.html">Talks</a></li>
+                <li><a class="nav__link" href="https://naman28.github.io/pages/teaching.html">Teaching</a></li>
+
+        </ul>
+    </nav>
+
+    <p class="social">
+    </p>
+
+        <h2>Categories</h2>
+        <ul class="navbar">
+                <li><a href="https://naman28.github.io/category/blog.html">Blog</a></li>
+        </ul>
+
+
+</aside>
+
+<!-- Content -->
+<article>
+    <section id="content" class="body">
+
+        <h1>Naman's Homepage</h1>
+<p><img style="float:right" src="./About_files/naman.png" alt="Photo of Naman Narang" height="200"></p>
+<p>Welcome, you have reached the webpage of Naman Narang. </p>
+<h3>Bio and Background</h3>
+<p>I am a Master's student in the <a href="http://www.cse.iitk.ac.in/">Department of Computer Science and Engineering</a> at the <a href="http://www.iitk.ac.in/">Indian Institute of Technology, Kanpur</a>.</p>
+<p><a href="https://naman28.github.io/docs/naman_cv.pdf">[CV]</a> (PDF)
+<h3>News</h3>
+    </section>
+</article>
+
+<!-- Footer -->
+    <footer>
+        <p>
+            <!-- Blog powered by <a href="http://getpelican.com/">Pelican</a>, -->
+            <!-- which takes great advantage of <a href="http://python.org/">Python</a>. -->
+            <!-- Theme <a href="https://github.com/parbhat/pelican-blue">Pelican-Blue</a> by <a href="https://parbhatpuri.com/">@parbhat</a>. -->
+        </p>
+    </footer>
+
+
+
+</body></html>
